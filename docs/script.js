@@ -5,8 +5,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setTimeout(() => loader.classList.add('hidden'), 1400);
   });
 
-
-
   const header = document.getElementById('header');
   const onScroll = () => {
     header.classList.toggle('scrolled', window.scrollY > 60);

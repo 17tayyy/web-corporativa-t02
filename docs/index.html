@@ -8,6 +8,85 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* ── Banner de cookies ── */
+        #cookie-banner {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            z-index: 9999;
+            background: rgba(15, 23, 42, 0.97);
+            backdrop-filter: blur(24px);
+            border-top: 1px solid rgba(34,197,94,0.25);
+            padding: 1.25rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            transform: translateY(100%);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+        #cookie-banner.visible { transform: translateY(0); }
+        #cookie-banner.hiding { transform: translateY(100%); }
+
+        .cookie-text { flex: 1; min-width: 260px; }
+        .cookie-text p { color: #94a3b8; font-size: 0.875rem; line-height: 1.6; margin: 0; }
+        .cookie-text p strong { color: #f1f5f9; }
+        .cookie-text a { color: #22c55e; text-decoration: none; }
+        .cookie-text a:hover { text-decoration: underline; }
+
+        .cookie-icon { width: 40px; height: 40px; background: rgba(34,197,94,0.1); border: 1px solid rgba(34,197,94,0.2); border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; font-size: 1.25rem; }
+
+        .cookie-actions { display: flex; gap: 0.75rem; flex-wrap: wrap; align-items: center; flex-shrink: 0; }
+        .cookie-btn { padding: 0.6rem 1.25rem; border-radius: 8px; font-size: 0.875rem; font-weight: 600; cursor: pointer; transition: all 0.2s; border: none; font-family: inherit; white-space: nowrap; }
+        .cookie-btn--accept { background: #22c55e; color: #000; }
+        .cookie-btn--accept:hover { background: #16a34a; transform: translateY(-1px); }
+        .cookie-btn--reject { background: transparent; color: #94a3b8; border: 1px solid rgba(255,255,255,0.12); }
+        .cookie-btn--reject:hover { color: #f1f5f9; border-color: rgba(255,255,255,0.25); }
+        .cookie-btn--settings { background: transparent; color: #22c55e; border: 1px solid rgba(34,197,94,0.3); }
+        .cookie-btn--settings:hover { background: rgba(34,197,94,0.08); }
+
+        /* ── Checkboxes formulari ── */
+        .form-consents { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 0.25rem; }
+        .consent-item { display: flex; align-items: flex-start; gap: 0.75rem; cursor: pointer; }
+        .consent-item input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.2);
+            border-radius: 5px;
+            background: transparent;
+            flex-shrink: 0;
+            margin-top: 2px;
+            cursor: pointer;
+            transition: all 0.2s;
+            position: relative;
+        }
+        .consent-item input[type="checkbox"]:checked {
+            background: #22c55e;
+            border-color: #22c55e;
+        }
+        .consent-item input[type="checkbox"]:checked::after {
+            content: '';
+            position: absolute;
+            left: 3px; top: 1px;
+            width: 8px; height: 5px;
+            border-left: 2px solid #000;
+            border-bottom: 2px solid #000;
+            transform: rotate(-45deg);
+        }
+        .consent-item input[type="checkbox"]:focus { outline: 2px solid rgba(34,197,94,0.5); outline-offset: 2px; }
+        .consent-item input[type="checkbox"]:invalid { border-color: #ef4444; }
+        .consent-label { font-size: 0.82rem; color: #94a3b8; line-height: 1.55; }
+        .consent-label a { color: #22c55e; text-decoration: none; }
+        .consent-label a:hover { text-decoration: underline; }
+        .consent-label .required-star { color: #ef4444; margin-left: 2px; }
+
+        /* ── Footer legal links ── */
+        .footer-legal { display: flex; gap: 1.5rem; flex-wrap: wrap; justify-content: center; margin-top: 0.5rem; }
+        .footer-legal a { color: #64748b; font-size: 0.8rem; text-decoration: none; transition: color 0.2s; }
+        .footer-legal a:hover { color: #22c55e; }
+    </style>
 </head>
 <!-- Default Statcounter code for FoodLogistic S.A.
 https://17tayyy.github.io/web-corporativa-t02 -->
@@ -26,6 +105,22 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
 <!-- End of Statcounter Code -->
 <body>
 
+    <!-- ══════════ BANNER DE COOKIES ══════════ -->
+    <div id="cookie-banner" role="dialog" aria-label="Avís de cookies" aria-live="polite">
+        <div class="cookie-icon">🍪</div>
+        <div class="cookie-text">
+            <p>
+                <strong>Utilitzem cookies</strong> per millorar la teva experiència. Les cookies tècniques són necessàries per al funcionament del lloc. Les analítiques ens ajuden a entendre com uses la web.
+                Consulta la nostra <a href="politica-cookies.html">Política de Cookies</a> i la <a href="politica-privacitat.html">Política de Privacitat</a>.
+            </p>
+        </div>
+        <div class="cookie-actions">
+            <button class="cookie-btn cookie-btn--reject" onclick="cookieChoice('reject')">Rebutjar opcionals</button>
+            <a href="politica-cookies.html" class="cookie-btn cookie-btn--settings">Configurar</a>
+            <button class="cookie-btn cookie-btn--accept" onclick="cookieChoice('accept')">Acceptar totes</button>
+        </div>
+    </div>
+
     <!-- Loader -->
     <div class="page-loader" id="loader">
         <div class="loader-content">
@@ -35,8 +130,6 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
             </svg>
         </div>
     </div>
-
-
 
     <!-- Navegació -->
     <header class="header" id="header">
@@ -229,7 +322,6 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
                     <span class="section-tag reveal">Sobre nosaltres</span>
                     <h2 class="section-title reveal">Una dècada connectant<br><span class="gradient-text">productors i consumidors.</span></h2>
                     <p class="reveal">"FoodLogístic S.A." és una empresa capdavantera en la distribució i logística alimentària a nivell nacional. Arran de l'obertura de noves rutes i la contractació de més personal, el seu volum de dades i les seves necessitats de comunicació s'han multiplicat.</p>
-
                     <p class="reveal">La seva infraestructura actual s'ha quedat petita i pateixen per la seguretat i la continuïtat del negoci. Han contactat amb la vostra empresa informàtica perquè els ajudeu a modernitzar-se. Us demanen actuar en tres àrees clau.</p>
                     <div class="sobre-features reveal">
                         <div class="feature">
@@ -328,7 +420,7 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
                     </div>
                 </div>
                 <div class="contacte-right reveal">
-                    <form class="contact-form" action="#" method="POST">
+                    <form class="contact-form" action="#" method="POST" id="contactForm" novalidate>
                         <div class="form-row">
                             <div class="form-group">
                                 <label for="nom">Nom</label>
@@ -351,6 +443,27 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
                                 <textarea id="missatge" name="missatge" rows="5" placeholder="Explica'ns les necessitats del teu negoci..." required></textarea>
                             </div>
                         </div>
+
+                        <!-- ══ CONSENTIMENTS ══ -->
+                        <div class="form-row">
+                            <div class="form-consents">
+                                <!-- Checkbox 1: dades (obligatori) -->
+                                <label class="consent-item">
+                                    <input type="checkbox" id="consent-data" name="consent_data" required>
+                                    <span class="consent-label">
+                                        He llegit i accepto la <a href="politica-privacitat.html" target="_blank">Política de Privacitat</a> i autoritzo el tractament de les meves dades personals per gestionar la meva consulta.<span class="required-star">*</span>
+                                    </span>
+                                </label>
+                                <!-- Checkbox 2: comunicacions comercials (opcional) -->
+                                <label class="consent-item">
+                                    <input type="checkbox" id="consent-marketing" name="consent_marketing">
+                                    <span class="consent-label">
+                                        Accepto rebre comunicacions comercials, novetats i ofertes de FoodLogistic S.A. Pots revocar aquest consentiment en qualsevol moment. Consulta l'<a href="avis-legal.html" target="_blank">Avís Legal</a>.
+                                    </span>
+                                </label>
+                            </div>
+                        </div>
+
                         <button type="submit" class="btn btn--primary btn--full">
                             Enviar missatge
                             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
@@ -408,6 +521,12 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
             </div>
             <div class="footer-bottom">
                 <p>&copy; 2026 FoodLogistic S.A. Tots els drets reservats.</p>
+                <!-- ══ LINKS LEGALS ══ -->
+                <div class="footer-legal">
+                    <a href="avis-legal.html">Avís Legal</a>
+                    <a href="politica-privacitat.html">Política de Privacitat</a>
+                    <a href="politica-cookies.html">Política de Cookies</a>
+                </div>
                 <div class="footer-socials">
                     <a href="#" aria-label="LinkedIn">
                         <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
@@ -424,5 +543,57 @@ referrerPolicy="no-referrer-when-downgrade"></a></div></noscript>
     </footer>
 
     <script src="script.js"></script>
+    <script>
+        // ══════════════════════════════════════
+        // BANNER DE COOKIES
+        // ══════════════════════════════════════
+        (function() {
+            const banner = document.getElementById('cookie-banner');
+            const STORAGE_KEY = 'fl_cookie_consent';
+
+            function hideBanner() {
+                banner.classList.add('hiding');
+                setTimeout(() => { banner.style.display = 'none'; }, 500);
+            }
+
+            // Mostrar banner si no hi ha consentiment previ
+            if (!localStorage.getItem(STORAGE_KEY)) {
+                // Delay lleuger perquè el loader no solapeu
+                setTimeout(() => { banner.classList.add('visible'); }, 1200);
+            }
+
+            window.cookieChoice = function(choice) {
+                localStorage.setItem(STORAGE_KEY, JSON.stringify({ choice, ts: Date.now() }));
+                hideBanner();
+            };
+        })();
+
+        // ══════════════════════════════════════
+        // VALIDACIÓ FORMULARI (checkbox obligatori)
+        // ══════════════════════════════════════
+        document.getElementById('contactForm').addEventListener('submit', function(e) {
+            const consentData = document.getElementById('consent-data');
+            if (!consentData.checked) {
+                e.preventDefault();
+                consentData.focus();
+                // Missatge d'error visual
+                consentData.style.borderColor = '#ef4444';
+                const label = consentData.closest('.consent-item');
+                if (!label.querySelector('.consent-error')) {
+                    const err = document.createElement('span');
+                    err.className = 'consent-error';
+                    err.style.cssText = 'color:#ef4444;font-size:0.78rem;display:block;margin-top:0.35rem;margin-left:1.65rem;';
+                    err.textContent = 'Has d\'acceptar la política de privacitat per continuar.';
+                    label.appendChild(err);
+                }
+                return false;
+            }
+        });
+        document.getElementById('consent-data').addEventListener('change', function() {
+            this.style.borderColor = '';
+            const err = this.closest('.consent-item').querySelector('.consent-error');
+            if (err) err.remove();
+        });
+    </script>
 </body>
 </html>
